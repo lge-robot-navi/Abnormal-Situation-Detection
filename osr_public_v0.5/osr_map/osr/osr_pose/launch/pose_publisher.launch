@@ -1,0 +1,15 @@
+<launch>
+
+  <arg name="robot_frame_id" default="mobile" doc="position we want to know" />
+  <arg name="map_frame_id" default="map" doc="global localization origin" />
+  <arg name="period" default="30" doc="period" />
+  <arg name="pose_topic" default="/robot_odom" doc="publish pose topic" />
+
+  <node pkg="osr_pose" type="odometry_publisher.py" name="odometry_publisher_node" output="screen">
+        <param name="from_frame_id" value="$(arg map_frame_id)" />
+        <param name="to_frame_id" value="$(arg robot_frame_id)" />
+        <param name="period" value="$(arg period)" />
+        <param name="pose_topic" value="$(arg pose_topic)" />
+  </node>
+</launch>
+

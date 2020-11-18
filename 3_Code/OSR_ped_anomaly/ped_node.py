@@ -3,10 +3,10 @@
 """ #
 @file		ped_node.py
 @date   	Aug 13, 2020
-@author 	Jinha Lee (jh_lee@etri.re.kr)
+@author 	Jin-ha Lee (jh_lee@etri.re.kr)
 @brief		This file include ROS node for publishing fixed agent anomaly score for pedestrain.
 
-Copyright (C) 2019  <Kiin Na>
+Copyright (C) 2019  <Jin-ha Lee>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

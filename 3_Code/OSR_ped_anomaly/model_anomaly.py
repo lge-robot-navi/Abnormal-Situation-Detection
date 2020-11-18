@@ -17,7 +17,7 @@ from tensorflow.python.client import device_lib
 # import cv2
 # sys.path.append('/opt/ros/kinetic/lib.python2.7/dist-packages')
 
-N_channel = 64  # decide the model hidden channel
+N_channel = 64  # decides the model hidden channel
 
 def opt_parser():
     parser = argparse.ArgumentParser()

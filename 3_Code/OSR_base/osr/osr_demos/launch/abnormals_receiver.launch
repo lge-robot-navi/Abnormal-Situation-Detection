@@ -1,0 +1,18 @@
+<launch>
+  
+	<!-- Abnormals configuration -->
+	<arg name="abnormals_period" default="10" doc="period" />
+		
+	<!-- UDP communication to server -->
+	<arg name="udp_port" default="12345" doc="udp port" />
+	
+	<arg name="agent_abnormals_topic" default="/osr/agent_abnormals" doc="agent_abnormals_topic" />
+	
+	
+  	<node pkg="osr_demos" type="abnormals_receiver" name="abnormals_receiver" output="screen">
+		<param name="period" value="$(arg abnormals_period)" />
+		<param name="agent_abnormals_topic" value="$(arg agent_abnormals_topic)" />
+        <param name="udp_port" value="$(arg udp_port)" />
+
+  	</node>
+</launch>

@@ -1,0 +1,17 @@
+<launch>
+  
+	<!-- Abnormals configuration -->
+	<arg name="change_image_period" default="10" doc="period" />
+	
+	<!-- UDP communication to server -->
+	<arg name="udp_port" default="12345" doc="udp port" />
+	
+	<arg name="pose_image_topic" default="/pose_image" doc="pose_image_topic" />
+	
+  	<node pkg="osr_demos" type="change_image_receiver" name="change_image_receiver" output="screen">
+		<param name="period" value="$(arg change_image_period)" />
+		<param name="pose_image_topic" value="$(arg pose_image_topic)" />
+        <param name="udp_port" value="$(arg udp_port)" />
+
+  	</node>
+</launch>

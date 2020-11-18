@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>osr_demos</name>
+  <version>0.0.0</version>
+  <maintainer email="kina@etri.re.kr">Kiin Na</maintainer>
+  <license>BSD</license>
+  <description>The osr_demos package</description>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roscpp</build_depend>
+  <export>
+  </export>
+</package>

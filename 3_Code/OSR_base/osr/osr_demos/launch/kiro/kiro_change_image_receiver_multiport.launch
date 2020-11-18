@@ -1,0 +1,21 @@
+<launch>
+  
+	<!-- Abnormals configuration -->
+	<arg name="change_image_period" default="10" doc="period" />
+	
+	
+	<!-- UDP communication to server -->
+	<arg name="local_id" default="1" doc="local id (KIRO: 1, REDONE: 2)" />
+	<arg name="data_type" default="3" doc="data type (MAP: 1, ABNORMAL: 2, IMAGE: 3)" />
+	<arg name="robot_ids" default="[1, 2, 3, 7, 8, 9]" doc="agent id list" />
+	
+	<arg name="pose_image_topic" default="/pose_image" doc="pose_image_topic" />
+	
+  	<node pkg="osr_demos" type="change_image_receiver_multiport" name="change_image_receiver_multiport" output="screen">
+		<param name="period" value="$(arg change_image_period)" />
+		<param name="pose_image_topic" value="$(arg pose_image_topic)" />
+        <param name="local_id" value="$(arg local_id)" />
+        <param name="data_type" value="$(arg data_type)" />
+		<rosparam param="robot_ids" subst_value="True">$(arg robot_ids)</rosparam>
+  	</node>
+</launch>

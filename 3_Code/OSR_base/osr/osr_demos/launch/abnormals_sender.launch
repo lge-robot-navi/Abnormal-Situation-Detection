@@ -1,0 +1,32 @@
+<launch>
+  
+	<!-- Abnormals configuration -->
+	<arg name="abnormals_period" default="10" doc="period" />
+	
+	<!-- Robot ID -->
+	<arg name="robot_id" default="1" doc="robot id" /> 
+	<arg name="robot_type" default="mobile" doc="robot_type (mobile or fixed)" />
+	<arg name="robot_frame_id" default="$(arg robot_type)_$(arg robot_id)" doc="frame_id and agent_id(mobile_01, mobile_02, fixed_01, fixed_02)" />
+	
+	
+	<!-- UDP communication to server -->
+	<arg name="udp_ip_address" default="127.0.0.1" doc="udp id address" />
+	<arg name="udp_port" default="12345" doc="udp port" />
+	
+	<arg name="abnormal_pedestrian_topic" default="/osr/abnormal_pedestrian" doc="abnormal_pedestrian_topic" />
+	<arg name="abnormal_sound_topic" default="/osr/abnormal_sound" doc="abnormal_sound_topic" />
+	
+  	<node pkg="osr_demos" type="abnormals_sender" name="abnormals_sender_$(arg robot_id)" output="screen">
+		<param name="period" value="$(arg abnormals_period)" />
+		
+	    <param name="robot_id" value="$(arg robot_id)" />
+		<param name="robot_frame_id" value="$(arg robot_frame_id)" />
+		
+		<param name="abnormal_pedestrian_topic" value="$(arg abnormal_pedestrian_topic)" />
+		<param name="abnormal_sound_topic" value="$(arg abnormal_sound_topic)" />
+		
+        <param name="udp_ip_address" value="$(arg udp_ip_address)" />
+        <param name="udp_port" value="$(arg udp_port)" />
+  	</node>
+  	
+</launch>

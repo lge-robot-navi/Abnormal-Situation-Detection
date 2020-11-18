@@ -1,0 +1,38 @@
+<launch>
+  
+	<!-- Abnormals configuration -->
+	<arg name="abnormals_period" default="10" doc="period" />
+	
+	<!-- Robot ID -->
+	<arg name="robot_id" default="1" doc="robot id" /> 
+	<arg name="robot_type" default="fixed" doc="robot_type (mobile or fixed)" />
+	<arg name="robot_frame_id" default="$(arg robot_type)_$(arg robot_id)" doc="frame_id and agent_id(mobile_01, mobile_02, fixed_01, fixed_02)" />
+	
+	<!-- Frame ID -->
+	<arg name="map_frame_id" default="map" doc="map_frame_id" />
+	<arg name="world_frame_id" default="world" doc="world_frame_id" />
+	
+	<!-- UDP communication to server -->
+	<arg name="udp_ip_address" default="203.232.102.208" doc="udp id address" />
+	<arg name="local_id" default="2" doc="local id (KIRO: 1, REDONE: 2)" />
+	<arg name="data_type" default="2" doc="data type (MAP: 1, ABNORMAL: 2, IMAGE: 3)" />
+	
+	<arg name="abnormal_pedestrian_topic" default="/osr/abnormal_pedestrian" doc="abnormal_pedestrian_topic" />
+	<arg name="abnormal_sound_topic" default="/osr/abnormal_sound" doc="abnormal_sound_topic" />
+	
+  	<node pkg="osr_demos" type="abnormals_sender_multiport" name="abnormals_sender_multiport_$(arg robot_id)" output="screen">
+		<param name="period" value="$(arg abnormals_period)" />
+		
+	    <param name="robot_id" value="$(arg robot_id)" />
+		<param name="robot_frame_id" value="$(arg robot_frame_id)" />
+		
+		<param name="abnormal_pedestrian_topic" value="$(arg abnormal_pedestrian_topic)" />
+		<param name="abnormal_sound_topic" value="$(arg abnormal_sound_topic)" />
+        <param name="udp_ip_address" value="$(arg udp_ip_address)" />
+        
+        <param name="local_id" value="$(arg local_id)" />
+        <param name="data_type" value="$(arg data_type)" />
+
+  	</node>
+  	
+</launch>

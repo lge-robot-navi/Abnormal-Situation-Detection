@@ -1,0 +1,37 @@
+<launch>
+  
+	<!-- Abnormals configuration -->
+	<arg name="change_image_period" default="10" doc="change_image_period" />
+	
+	<!-- Robot ID -->
+	<arg name="robot_id" default="1" doc="robot id" /> 
+	<arg name="robot_type" default="mobile" doc="robot_type (mobile or fixed)" />
+	<arg name="robot_frame_id" default="$(arg robot_type)_$(arg robot_id)" doc="frame_id and agent_id(mobile_01, mobile_02, fixed_01, fixed_02)" />
+	
+	<!-- UDP communication to server -->
+	<arg name="udp_ip_address" default="192.168.0.21" doc="udp id address" />
+	<arg name="local_id" default="1" doc="local id (KIRO: 1, REDONE: 2)" />
+	<arg name="data_type" default="3" doc="data type (MAP: 1, ABNORMAL: 2, IMAGE: 3)" />
+	
+	<arg name="image_topic" default="/osr/image_color" doc="image_topic" />
+	<arg name="pose_topic" default="/robot_odom" doc="pose_topic" />
+	
+	<arg name="change_image_height" default="120" doc="image_height" />
+	<arg name="change_image_width" default="160" doc="image_width" />
+	
+  	<node pkg="osr_demos" type="change_image_sender_multiport" name="change_image_sender_multiport_$(arg robot_id)" output="screen">
+		<param name="period" value="$(arg change_image_period)" />
+		
+	    <param name="robot_id" value="$(arg robot_id)" />
+		<param name="robot_frame_id" value="$(arg robot_frame_id)" />
+		
+		<param name="image_topic" value="$(arg image_topic)" />
+		<param name="pose_topic" value="$(arg pose_topic)" />
+        <param name="udp_ip_address" value="$(arg udp_ip_address)" />
+        <param name="local_id" value="$(arg local_id)" />
+        <param name="data_type" value="$(arg data_type)" />
+		<param name="image_height" value="$(arg change_image_height)" />
+		<param name="image_width" value="$(arg change_image_width)" />
+  	</node>
+  	
+</launch>

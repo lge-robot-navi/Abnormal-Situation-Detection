@@ -2,7 +2,6 @@ import cv2
 
 # Extract all frame from the video
 
-
 vidcap = cv2.VideoCapture('ab_ped_01.mp4')
 success, image = vidcap.read()
 count = 0

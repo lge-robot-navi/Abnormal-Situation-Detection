@@ -40,11 +40,6 @@ def main():
     opt = opt_parser()
     # device_lib.list_local_devices()
 
-    opt.exp_name = 'Test_512_old_pohangDB'
-    opt.path = './data/trim/train/0.normal/'
-
-    # print("number of thread {}".format(torch.get_num_thread))
-
     train_model(opt)
     # test_model(opt)
 
@@ -53,6 +48,7 @@ def main():
     # tpatch = data_read(imgs)
     # a = test_patches(model, opt, tpatch)
     # print(a)
+
 def build_model_enc(input_size, input_channel):
     model = ke.models.Sequential()
     model.add(ke.layers.Conv2D(N_channel, 3, input_shape=(input_size, input_size, input_channel)))

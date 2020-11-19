@@ -83,17 +83,8 @@ def crop_from_topic(tracks, image):
     patches = []
     # cv2.imwrite('./data/frame/img_{0}.jpg'.format(rospy.get_time()), image)  # save full frame img
     for box in tracks:
-        # print(box)
-        # x, y, w, h = box
-        # lt = (int(x - w / 2), int(y - h / 2)+1)  # Left top
-        # rb = (int(x + w / 2), int(y + h / 2)+1)  # Right bottom
-        # print('instance {0} and {1}'.format(lt, rb))
-        # crop = image[lt[1]:rb[1], lt[0]:rb[0]].copy()  # crop patch
         crop = image[box[1]:box[1]+box[3], box[0]:box[0] + box[2]].copy()  # crop patch
         patches.append(crop)
-        # plt.imshow(image, interpolation='nearest')
-        # plt.show()
-        # cv2.rectangle(image, lt, rb, (255, 0, 0), 2)
     return patches
 
 def opt_parser_test():

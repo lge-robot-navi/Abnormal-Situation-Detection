@@ -28,7 +28,6 @@ from nav_msgs.msg import Odometry
 from osr_msgs.msg import Abnormal, Tracks
 from sensor_msgs.msg import Image
 from model_anomaly import test_patches, init_ped_anoamly
-import matplotlib.pyplot as plt
 import argparse, sys
 
 sys.path.remove('/opt/ros/kinetic/lib/python2.7/dist-packages')

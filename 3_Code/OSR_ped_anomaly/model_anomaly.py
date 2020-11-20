@@ -10,9 +10,6 @@ from sklearn import metrics
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tqdm import tqdm
 
-from tensorflow.python.client import device_lib
-# from skimage.transform import resize
-
 # sys.path.remove('/opt/ros/kinetic/lib.python2.7/dist-packages')
 # import cv2
 # sys.path.append('/opt/ros/kinetic/lib.python2.7/dist-packages')

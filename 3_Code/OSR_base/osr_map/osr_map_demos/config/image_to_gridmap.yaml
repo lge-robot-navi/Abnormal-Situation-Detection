@@ -1,0 +1,16 @@
+grid_map_topic: /osr_map_background
+grid_map_visualizations:
+  - name: color_points
+    type: point_cloud
+    params:
+      layer: grey
+  - name: grey_grid
+    type: occupancy_grid
+    params:
+      layer: grey
+      data_min: 0.0
+      data_max: 1.0
+  - name: flat_grid
+    type: flat_point_cloud
+    params:
+      height: 0.0

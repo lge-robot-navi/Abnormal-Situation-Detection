@@ -9,4 +9,3 @@ while success:
   cv2.imwrite("frame_extract/ab_ped_01/frame%d.jpg" % count, image)     # save frame as JPEG file
   success, image = vidcap.read()
   count += 1
-print("Done.")

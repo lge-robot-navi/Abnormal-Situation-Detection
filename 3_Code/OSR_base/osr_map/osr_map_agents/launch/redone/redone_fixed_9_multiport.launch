@@ -1,0 +1,212 @@
+<launch>
+   
+	<!-- Robot ID -->
+	<arg name="robot_id" default="9" doc="robot id" /> 
+	<arg name="robot_type" default="fixed" doc="robot_type (mobile or fixed)" />
+	<arg name="robot_frame_id" default="$(arg robot_type)_$(arg robot_id)" doc="frame_id and agent_id(mobile_01, mobile_02, fixed_01, fixed_02)" />
+	
+	<!-- UDP communication to server -->
+	<arg name="udp_ip_address" default="203.232.102.208" doc="udp id address" />
+	<arg name="local_id" default="2" doc="local id (KIRO: 1, REDONE: 2)" />
+	<arg name="data_type" default="1" doc="data type (MAP: 1, ABNORMAL: 2, IMAGE: 3)" />
+	
+	<!-- Map layer switch -->
+	<arg name="object_layer_on" default="true" doc="object_layer_on" />
+	<arg name="thermal_layer_on" default="false" doc="thermal_layer_on" />
+	<arg name="elevation_layer_on" default="false" doc="elevation_layer_on" />
+	
+	<!-- Sensor topics for map layer nodes -->
+	<arg name="pose_topic" default="/robot_odom" doc="pose_topic" />
+	<arg name="map_topic" default="/agent_map" doc="map_topic" />
+	<arg name="thermal_image_topic" default="/osr/image_thermal" doc="thermal_image_topic" />
+	<arg name="object_topic" default="/osr/tracks" doc="object_topic" />
+	<arg name="depth_image_topic" default="/osr/image_aligned_depth" doc="depth_image_topic" />
+	
+	<!-- Frame ID -->
+	<arg name="map_frame_id" default="map" doc="map_frame_id" />
+	<arg name="world_frame_id" default="world" doc="world_frame_id" />
+  
+	<!-- Camera Parameters -->
+	<arg name="camera_fx" default="643.6" doc="camera_fx" />
+	<arg name="camera_fy" default="643.6" doc="camera_fy" />
+	<arg name="camera_cx" default="320.0" doc="camera_cx" />
+	<arg name="camera_cy" default="240.0" doc="camera_cy" />
+	<arg name="camera_x" default="8.860" doc="camera_x" />
+	<arg name="camera_y" default="3.280" doc="camera_y" />
+	<arg name="camera_z" default="6.560" doc="camera_z" />
+	<arg name="camera_pan" default="-177.6" doc="camera_pan" />
+	<arg name="camera_tilt" default="-28.4" doc="camera_tilt" />
+	<arg name="camera_roll" default="-3.7" doc="camera_roll" />
+	
+    <arg name="image_from_width" default="0" />
+    <arg name="image_to_width" default="640" />
+    <arg name="image_from_height" default="0" />
+    <arg name="image_to_height" default="480" />
+  
+	<!-- Map layer configuration -->
+	<arg name="layer_period" default="10" doc="period" />
+	<arg name="layer_length_x" default="50.0" doc="layer_length_x" />
+	<arg name="layer_length_y" default="50.0" doc="layer_length_y" />
+	<arg name="layer_resolution" default="1.0" doc="layer_resolution" />
+  
+	<arg name="stack_size" default="1" doc="update stack size" />
+	<arg name="multi_project_on" default="false" doc="multi element projection onto object map layer" />
+
+	<!-- Layered map configuration -->
+	<arg name="map_period" default="5" doc="period" />
+	<arg name="map_length_x" default="50.0" doc="map_length_x" />
+	<arg name="map_length_y" default="50.0" doc="map_length_y" />
+	<arg name="map_resolution" default="1.0" doc="map_resolution" />
+  
+	<!-- Min Max Value for each layer -->
+	<arg name="min_elevation" default="-0.5" doc="min_elevation" />
+	<arg name="max_elevation" default="2.5" doc="max_elevation" />
+	<arg name="min_person_flow_x" default="-10.0" doc="min_person_flow_x" />
+	<arg name="max_person_flow_x" default="10.0" doc="max_person_flow_x" />
+	<arg name="min_person_flow_y" default="-10.0" doc="min_person_flow_y" />
+	<arg name="max_person_flow_y" default="10.0" doc="max_person_flow_y" />
+	<arg name="min_car_flow_x" default="-20.0" doc="min_car_flow_x" />
+	<arg name="max_car_flow_x" default="20.0" doc="max_car_flow_x" />
+	<arg name="min_car_flow_y" default="-20.0" doc="min_car_flow_y" />
+	<arg name="max_car_flow_y" default="20.0" doc="max_car_flow_y" />
+	<arg name="min_thermal" default="-25.0" doc="min_thermal" />
+	<arg name="max_thermal" default="135" doc="max_thermal" />
+  
+  
+	<!-- Layer parameters -->
+	<arg name="elevation_layer_topic" default="/osr_map/elevation_layer" doc="elevation_layer_topic" />
+	<arg name="thermal_layer_topic" default="/osr_map/thermal_layer" doc="thermal_layer_topic" />
+	<arg name="object_layer_topic" default="/osr_map/object_layer" doc="object_layer_topic" />
+
+	<!-- Fixed Pose Publisher -->
+	<node pkg="osr_pose" type="fixed_agent_pose_publisher.py" name="fixed_agent_pose_publisher_$(arg robot_id)" output="screen">
+	    <param name="period" value="$(arg layer_period)" />
+	    <param name="map_frame_id" value="$(arg map_frame_id)" />
+		<param name="robot_frame_id" value="$(arg robot_frame_id)" />
+		<param name="world_frame_id" value="$(arg world_frame_id)" />
+	    <param name="pose_topic" value="$(arg pose_topic)" />
+	    <param name="pose_fliename" value="$(arg robot_frame_id)_to_map.txt" />
+	</node>
+  
+	<!-- Map Layer Modules -->
+	<group if="$(arg elevation_layer_on)">
+	<node pkg="osr_map_agents" type="fixed_elevation_layer_node" name="elevation_layer_$(arg robot_id)" output="screen">
+
+	    <param name="robot_id" value="$(arg robot_id)" />
+        <param name="period" value="$(arg layer_period)" />
+        <param name="length_x" value="$(arg layer_length_x)" />
+        <param name="length_y" value="$(arg layer_length_y)" />
+        <param name="resolution" value="$(arg layer_resolution)" />
+
+        <param name="map_frame_id" value="$(arg map_frame_id)" />
+        <param name="robot_frame_id" value="$(arg robot_frame_id)" />
+        <param name="world_frame_id" value="$(arg world_frame_id)" />
+
+        <param name="offset_z" value="0.0" />
+        <param name="min_z" value="-0.5" />
+        <param name="max_z" value="2.0" />
+        <param name="thickness" value="0.3" />
+        <param name="max_dist" value="7.0" />
+        <param name="min_dist" value="0.5" />
+
+        <param name="layer_topic" value="$(arg elevation_layer_topic)" />
+        <param name="pose_topic" value="$(arg pose_topic)" />
+        <param name="depth_image_topic" value="$(arg depth_image_topic)" />
+        
+        <param name="camera_fx" value="$(arg camera_fx)" />
+        <param name="camera_fy" value="$(arg camera_fy)" />
+        <param name="camera_cx" value="$(arg camera_cx)" />
+        <param name="camera_cy" value="$(arg camera_cy)" />
+        <param name="camera_x" value="$(arg camera_x)" />
+        <param name="camera_y" value="$(arg camera_y)" />
+        <param name="camera_z" value="$(arg camera_z)" />
+        <param name="camera_pan" value="$(arg camera_pan)" />
+        <param name="camera_tilt" value="$(arg camera_tilt)" />
+        <param name="camera_roll" value="$(arg camera_roll)" />
+	</node>
+  	</group>
+  
+	<group if="$(arg object_layer_on)">
+  	<node pkg="osr_map_agents" type="fixed_object_layer_node" name="object_layer_$(arg robot_id)" output="screen">
+		
+	    <param name="robot_id" value="$(arg robot_id)" />
+		<param name="period" value="$(arg layer_period)" />
+		<param name="length_x" value="$(arg layer_length_x)" />
+		<param name="length_y" value="$(arg layer_length_y)" />
+		<param name="resolution" value="$(arg layer_resolution)" />
+		<param name="multi_project_on" value="$(arg multi_project_on)" />
+		
+		<param name="map_frame_id" value="$(arg map_frame_id)" />
+		<param name="robot_frame_id" value="$(arg robot_frame_id)" />
+		<param name="world_frame_id" value="$(arg world_frame_id)" />
+		
+		<param name="layer_topic" value="$(arg object_layer_topic)" />
+		<param name="object_topic" value="$(arg object_topic)" />
+		<param name="pose_topic" value="$(arg pose_topic)" />
+		
+		
+        <param name="camera_fx" value="$(arg camera_fx)" />
+        <param name="camera_fy" value="$(arg camera_fy)" />
+        <param name="camera_cx" value="$(arg camera_cx)" />
+        <param name="camera_cy" value="$(arg camera_cy)" />
+        <param name="camera_x" value="$(arg camera_x)" />
+        <param name="camera_y" value="$(arg camera_y)" />
+        <param name="camera_z" value="$(arg camera_z)" />
+        <param name="camera_pan" value="$(arg camera_pan)" />
+        <param name="camera_tilt" value="$(arg camera_tilt)" />
+        <param name="camera_roll" value="$(arg camera_roll)" />
+        
+        <param name="image_from_width" value="$(arg image_from_width)" />
+        <param name="image_to_width" value="$(arg image_to_width)" />
+        <param name="image_from_height" value="$(arg image_from_height)" />
+        <param name="image_to_height" value="$(arg image_to_height)" />
+  	</node>
+	</group>
+
+	<node pkg="osr_map_agents" type="osr_map_agent_multiport_node" name="osr_map_agent_multiport_$(arg robot_id)" output="screen">
+	    <param name="robot_id" value="$(arg robot_id)" />
+		<param name="period" value="$(arg map_period)" />
+		<param name="length_x" value="$(arg map_length_x)" />
+		<param name="length_y" value="$(arg map_length_y)" />
+		<param name="resolution" value="$(arg map_resolution)" />
+
+		<param name="map_frame_id" value="$(arg map_frame_id)" />
+		<param name="robot_frame_id" value="$(arg robot_frame_id)" />
+		<param name="world_frame_id" value="$(arg world_frame_id)" />
+		
+		<param name="elevation_layer_on" value="$(arg elevation_layer_on)" />
+		<param name="thermal_layer_on" value="$(arg thermal_layer_on)" />
+		<param name="object_layer_on" value="$(arg object_layer_on)" />
+		
+		<param name="pose_topic" value="$(arg pose_topic)" />
+		<param name="map_topic" value="$(arg map_topic)" />
+		<param name="elevation_layer_topic" value="$(arg elevation_layer_topic)" />
+		<param name="thermal_layer_topic" value="$(arg thermal_layer_topic)" />
+		<param name="object_layer_topic" value="$(arg object_layer_topic)" />  
+
+		<param name="udp_ip_address" value="$(arg udp_ip_address)" />
+        <param name="local_id" value="$(arg local_id)" />
+        <param name="data_type" value="$(arg data_type)" />
+        
+		<param name="min_elevation" value="$(arg min_elevation)" />
+		<param name="max_elevation" value="$(arg max_elevation)" />
+		<param name="min_person_flow_x" value="$(arg min_person_flow_x)" />
+		<param name="max_person_flow_x" value="$(arg max_person_flow_x)" />
+		<param name="min_person_flow_y" value="$(arg min_person_flow_y)" />
+		<param name="max_person_flow_y" value="$(arg max_person_flow_y)" />
+		<param name="min_car_flow_x" value="$(arg min_car_flow_x)" />
+		<param name="max_car_flow_x" value="$(arg max_car_flow_x)" />
+		<param name="min_car_flow_y" value="$(arg min_car_flow_y)" />
+		<param name="max_car_flow_y" value="$(arg max_car_flow_y)" />
+		<param name="min_thermal" value="$(arg min_thermal)" />
+		<param name="max_thermal" value="$(arg max_thermal)" />
+	</node>  
+
+ 	<!-- Launch the grid map visualizer -->
+	<node pkg="grid_map_visualization" type="grid_map_visualization" name="osr_map_agent_viz_$(arg robot_type)" output="screen">
+		<rosparam command="load" file="$(find osr_map_agents)/config/$(arg robot_type)_agent.yaml" />
+	</node>
+	  
+	<!-- Launch RVIZ -->
+	<node pkg="rviz" type="rviz" name="rviz_node" required="true" args="-d $(find osr_map_agents)/config/$(arg robot_type)_agent.rviz" /> 
+</launch>

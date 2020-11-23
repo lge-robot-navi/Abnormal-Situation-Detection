@@ -1,0 +1,61 @@
+grid_map_topic: /agent_map
+
+grid_map_visualizations:
+
+  - name: person_number
+    type: occupancy_grid
+    params:
+     layer: person_number
+     data_min: 0.0
+     data_max: 5.0
+
+  - name: object_update
+    type: occupancy_grid
+    params:
+     layer: object_update
+     data_min: 0.0
+     data_max: 1.0
+
+  - name: person_posture
+    type: occupancy_grid
+    params:
+     layer: person_posture
+     data_min: 0.0
+     data_max: 5.0
+
+  - name: person_flow_x
+    type: occupancy_grid
+    params:
+     layer: person_flow_x
+     data_min: -5.0
+     data_max: 5.0
+
+  - name: person_flow_y
+    type: occupancy_grid
+    params:
+     layer: person_flow_y
+     data_min: -5.0
+     data_max: 5.0
+
+  - name: car_number
+    type: occupancy_grid
+    params:
+     layer: car_number
+     data_min: 0.0
+     data_max: 5.0
+
+  - name: car_flow_x
+    type: occupancy_grid
+    params:
+     layer: car_flow_x
+     data_min: -30.0
+     data_max: 30.0
+
+  - name: car_flow_y
+    type: occupancy_grid
+    params:
+     layer: pcar_flow_y
+     data_min: -30.0
+     data_max: 30.0
+     
+     

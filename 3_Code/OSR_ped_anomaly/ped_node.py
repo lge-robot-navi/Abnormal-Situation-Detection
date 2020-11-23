@@ -35,6 +35,11 @@ import cv2
 sys.path.append('/opt/ros/kinetic/lib/python2.7/dist-packages')
 from cv_bridge import CvBridge, CvBridgeError
 
+
+tracks = None
+image = None
+
+
 class MessageSubscriber:  # Merge topics here
     def __init__(self, sub_pose_topic):
         self.sub_pose = rospy.Subscriber(sub_pose_topic, Odometry, self.pose_callback)
@@ -46,16 +51,12 @@ class MessageSubscriber:  # Merge topics here
     def get_messages(self):
         return self.pose_msg
 
-tracks = None
-image = None
-
 def tracks_cb(msg):
     """
     :param msg: Ros topic(bounding box information)
     :return: Extracted bounding box
     """
     global tracks
-    # print('tracks_cb')
     tmp = []
     for track in msg.tracks:
         x = track.bbox_pose.x
@@ -70,7 +71,6 @@ def image_cb(msg):
     :return: Extracted image
     """
     global image
-    # print('image_cb')
     bridge = CvBridge()
     try:
         cv_image = bridge.imgmsg_to_cv2(msg, "bgr8")

@@ -1,0 +1,57 @@
+<launch>
+  <arg name="period" default="5" doc="period" />
+  <arg name="world_frame_id" default="world" doc="world_frame_id" />
+  <arg name="map_frame_id" default="map" doc="map_frame_id" />
+  
+  <arg name="position_x" default="0" doc="origin_x : x position from reference map x" />
+  <arg name="position_y" default="0" doc="origin_y : y position from reference map y" />
+  <arg name="length_x" default="140" doc="length_x" />
+  <arg name="length_y" default="170" doc="length_y" />
+  <arg name="resolution" default="0.5" doc="resolution" />
+  
+  <arg name="object_map_on" default="true" doc="object_map_on" />
+  <arg name="thermal_map_on" default="true" doc="thermal_map_on" />
+  <arg name="elevation_map_on" default="true" doc="elevation_map_on" />
+ 
+  <arg name="extend_map" default="false" doc="fix the size and the position of map" />
+ 
+  <arg name="load_map_on" default="false" doc="whether it load the saved map." />
+  <arg name="map_path" default="$(find osr_map_server)/map" doc="the folder path of the saved map." />
+  <arg name="map_name" default="kiro" doc="the name of the map to load." />
+  <arg name="map_topic" default="/osr_map" doc="the file name of the map to load." />
+  
+  <arg name="viz_on" default="true" doc="viz_on." />
+  <arg name="udp_port" default="12345" doc="udp port" />
+   
+  <node name="short_term_server_node" pkg="osr_map_server" type="short_term_server_node" output="screen">
+      <param name="period" value="$(arg period)" />
+      <param name="world_frame_id" value="$(arg world_frame_id)" />
+      <param name="map_frame_id" value="$(arg map_frame_id)" />
+      <param name="position_x" value="$(arg position_x)" />
+      <param name="position_y" value="$(arg position_y)" />
+      <param name="length_x" value="$(arg length_x)" />
+      <param name="length_y" value="$(arg length_y)" />
+      <param name="resolution" value="$(arg resolution)" />
+
+      <param name="load_map_on" value="$(arg load_map_on)" />
+      <param name="extend_map" value="$(arg extend_map)" />
+      <param name="map_path" value="$(arg map_path)" />
+      <param name="map_name" value="$(arg map_name)" />
+      <param name="map_topic" value="$(arg map_topic)" />
+      
+      <param name="object_map_on" value="$(arg object_map_on)" />
+      <param name="thermal_map_on" value="$(arg thermal_map_on)" />
+      <param name="elevation_map_on" value="$(arg elevation_map_on)" />
+	  <param name="udp_port" value="$(arg udp_port)" />
+      <param name="viz_on" value="$(arg viz_on)" />
+  </node>  
+
+  <!-- Launch the grid map visualizer -->
+  <node pkg="grid_map_visualization" type="grid_map_visualization" name="server_viz" output="screen">
+    <rosparam command="load" file="$(find osr_map_server)/config/server.yaml" />
+  </node>
+
+  <!--node pkg="rviz" type="rviz" name="server_rviz_node" required="true" args="-d $(find osr_map_server)/config/server.rviz" /--> 
+
+
+</launch>

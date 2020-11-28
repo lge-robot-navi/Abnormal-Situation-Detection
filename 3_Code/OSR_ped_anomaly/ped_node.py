@@ -35,12 +35,10 @@ import cv2
 sys.path.append('/opt/ros/kinetic/lib/python2.7/dist-packages')
 from cv_bridge import CvBridge, CvBridgeError
 
-
 tracks = None
 image = None
 
-
-class MessageSubscriber:  # Merge topics here
+class MessageSubscriber:  # Merge topics
     def __init__(self, sub_pose_topic):
         self.sub_pose = rospy.Subscriber(sub_pose_topic, Odometry, self.pose_callback)
         self.pose_msg = None

@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow.keras as ke
 import random
-import os, sys
+import os
 import glob
 import matplotlib.pyplot as plt
 from tensorflow.keras.preprocessing import image
@@ -9,10 +9,6 @@ import argparse
 from sklearn import metrics
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tqdm import tqdm
-
-# sys.path.remove('/opt/ros/kinetic/lib.python2.7/dist-packages')
-# import cv2
-# sys.path.append('/opt/ros/kinetic/lib.python2.7/dist-packages')
 
 N_channel = 64  # decides the model hidden channel
 

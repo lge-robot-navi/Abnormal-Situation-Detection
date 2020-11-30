@@ -1,10 +1,10 @@
 import cv2
 
 # Extract all frame from the video
-vid_name = 'ab_ped_01.mp4'
-vidcap = cv2.VideoCapture(vid_name)
+vid_name = 'ab_ped_01.mp4'  # File to read
+out_path = 'frame_extract'  # Output Path
 
-out_path = 'frame_extract'
+vidcap = cv2.VideoCapture(vid_name)
 success, image = vidcap.read()
 
 count = 0

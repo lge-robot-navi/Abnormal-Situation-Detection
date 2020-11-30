@@ -29,7 +29,6 @@ def opt_parser():
 
     return opt
 def main():
-    """ Training """
     opt = opt_parser()
     # device_lib.list_local_devices()
 
@@ -143,8 +142,7 @@ def imagegrid(dec, epochnumber, exp_name, latent_size):
     if not os.path.isdir("./results/{0}".format(exp_name)):
         os.mkdir("./results/{0}".format(exp_name))
     fig.savefig("./results/{0}/{1}.png".format(exp_name, str(epochnumber)))
-    # plt.show()
-    # plt.close(fig)
+
 def recongrid(enc, dec, epochnumber, exp_name, batch):
     fig = plt.figure(figsize=[8, 8])
 

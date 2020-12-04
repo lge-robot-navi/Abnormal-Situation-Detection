@@ -244,7 +244,7 @@ def recon_score(model, x_test):
     loss = ke.losses.MSE(x_test, pred)
     scores = ke.backend.sum(loss, axis=2)
     scores = ke.backend.sum(scores, axis=1)
-    # scores = (scores - ke.backend.min(scores))/ke.backend.max(scores)
+    # scores = (scores - ke.backend.min(scores))/ke.backend.max(scores)  # normalization
 
     return scores
 def test_model(opt):
@@ -285,15 +285,12 @@ def init_ped_anoamly(opt):
 
     return model
 def test_patches(model, opt, patches):  # TODO: eval score on given patch
-    max_score = 0
     scores = []
-
     for i in range(len(patches)):
         img = np.array(patches[i])
         img = np.resize(img, (1, 64, 64, 3))
         pred = model['checker'].predict(img)
         scores.append(pred)
-
     max_score = max(scores)
 
     # patches = patches.astype(float)
@@ -304,18 +301,6 @@ def test_patches(model, opt, patches):  # TODO: eval score on given patch
     #     plt.show()
 
     # TODO: define Reconstruction based anomaly score
-    # opt.path = './data/pohang/unsu/test/0.normal/'
-    # x_test = load_test(opt.path)  # x_test ~ 2349,64,64,3 ndarray
-    # r_score = recon_score(model, patches)
-    # print("max {0}, min {1}".format(ke.backend.max(r_score),ke.backend.min(r_score)))
-    # for i in range(len(patches)):
-    #     x_tmp = np.expand_dims(patches[i], 0)
-    #     recon_loss = model['ae'].evaluate(x_tmp, x_tmp, verbose=0)
-    #     # print('X={0}, Prediction={1}'.format(x_test[i], y_test))
-    #     if max_score < recon_loss:
-    #         max_score = recon_loss
-    #     print('Recon_loss={1:.3f}, Max_score={0:.3f}'.format(max_score, recon_loss))
-
     return max_score
 def train_model(opt):
     if not os.path.isdir('./weights/save/{0}/'.format(opt.exp_name)):
@@ -383,8 +368,6 @@ def train_model(opt):
             recongrid(model['enc'], model['dec'], epochnumber, opt.exp_name, batch)
 
 
-
-    
 
 if __name__ == '__main__':
     main()

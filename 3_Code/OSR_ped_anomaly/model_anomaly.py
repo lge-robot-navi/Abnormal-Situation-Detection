@@ -1,3 +1,31 @@
+
+""" #
+@file		model_anomaly.py
+@date   	Aug 13, 2020
+@author 	Jin-ha Lee (jh_lee@etri.re.kr)
+@brief		This file include ROS node for publishing fixed agent anomaly score for pedestrain.
+
+Copyright (C) 2019  <Jin-ha Lee>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+"""
+
+
+
+
+
+
 import numpy as np
 import tensorflow.keras as ke
 import random
@@ -29,7 +57,6 @@ def opt_parser():
 
     return opt
 def main():
-    """ Training """
     opt = opt_parser()
     # device_lib.list_local_devices()
 
@@ -143,8 +170,7 @@ def imagegrid(dec, epochnumber, exp_name, latent_size):
     if not os.path.isdir("./results/{0}".format(exp_name)):
         os.mkdir("./results/{0}".format(exp_name))
     fig.savefig("./results/{0}/{1}.png".format(exp_name, str(epochnumber)))
-    # plt.show()
-    # plt.close(fig)
+
 def recongrid(enc, dec, epochnumber, exp_name, batch):
     fig = plt.figure(figsize=[8, 8])
 
@@ -246,7 +272,7 @@ def recon_score(model, x_test):
     loss = ke.losses.MSE(x_test, pred)
     scores = ke.backend.sum(loss, axis=2)
     scores = ke.backend.sum(scores, axis=1)
-    # scores = (scores - ke.backend.min(scores))/ke.backend.max(scores)
+    # scores = (scores - ke.backend.min(scores))/ke.backend.max(scores)  # normalization
 
     return scores
 def test_model(opt):
@@ -287,15 +313,12 @@ def init_ped_anoamly(opt):
 
     return model
 def test_patches(model, opt, patches):  # TODO: eval score on given patch
-    max_score = 0
     scores = []
-
     for i in range(len(patches)):
         img = np.array(patches[i])
         img = np.resize(img, (1, 64, 64, 3))
         pred = model['checker'].predict(img)
         scores.append(pred)
-
     max_score = max(scores)
 
     # patches = patches.astype(float)
@@ -306,18 +329,6 @@ def test_patches(model, opt, patches):  # TODO: eval score on given patch
     #     plt.show()
 
     # TODO: define Reconstruction based anomaly score
-    # opt.path = './data/pohang/unsu/test/0.normal/'
-    # x_test = load_test(opt.path)  # x_test ~ 2349,64,64,3 ndarray
-    # r_score = recon_score(model, patches)
-    # print("max {0}, min {1}".format(ke.backend.max(r_score),ke.backend.min(r_score)))
-    # for i in range(len(patches)):
-    #     x_tmp = np.expand_dims(patches[i], 0)
-    #     recon_loss = model['ae'].evaluate(x_tmp, x_tmp, verbose=0)
-    #     # print('X={0}, Prediction={1}'.format(x_test[i], y_test))
-    #     if max_score < recon_loss:
-    #         max_score = recon_loss
-    #     print('Recon_loss={1:.3f}, Max_score={0:.3f}'.format(max_score, recon_loss))
-
     return max_score
 def train_model(opt):
     if not os.path.isdir('./weights/save/{0}/'.format(opt.exp_name)):
@@ -385,8 +396,6 @@ def train_model(opt):
             recongrid(model['enc'], model['dec'], epochnumber, opt.exp_name, batch)
 
 
-
-    
 
 if __name__ == '__main__':
     main()

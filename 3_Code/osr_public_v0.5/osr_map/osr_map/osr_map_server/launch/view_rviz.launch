@@ -1,3 +1,0 @@
-<launch>
-  <node pkg="rviz" type="rviz" name="server_rviz" required="true" args="-d $(find osr_map_server)/config/server.rviz" /> 
-</launch>

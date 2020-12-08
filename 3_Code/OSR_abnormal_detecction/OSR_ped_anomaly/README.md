@@ -1,4 +1,4 @@
-# Detection for Abnormal Pedstrians 
+# Detection for Abnormal Pedestrians 
 The project contains code to detect abnormal pedestrians.  It is still work in progress.
 
 ### Description
@@ -23,6 +23,5 @@ ped_node: Modules for communication between the anomaly detection module and the
 
 ### Contributor
 * [✉️](mailto:jh_lee@etri.re.kr) __이진하__ (in Ha, Lee)
-#
 #
 ![](https://www.etri.re.kr/images/kor/sub5/signature08.png)

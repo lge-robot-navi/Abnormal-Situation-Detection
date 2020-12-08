@@ -23,6 +23,6 @@ ped_node: Modules for communication between the anomaly detection module and the
 
 ### Contributor
 * [✉️](mailto:jh_lee@etri.re.kr) __이진하__ (in Ha, Lee)
-<p></p> 
-<p></p>
+#
+#
 ![](https://www.etri.re.kr/images/kor/sub5/signature08.png)

@@ -12,5 +12,6 @@ This software is a program that (1) generates a probability map, (2) extracts an
 * Tensorflow 2.0.0
 
 # 참여기관
-* ![](https://www.etri.re.kr/images/kor/sub5/signature08.png)
 * [✉️](mailto:creatrix@etri.re.kr) __신호철__ ()
+#
+![](https://www.etri.re.kr/images/kor/sub5/signature08.png)

@@ -25,6 +25,6 @@ There are two types of hardware architecture: fixed agents and mobile agents wit
 - TinyXML
 
 ### Contributor
-* [✉️](mailto:mzz.pieas@etri.re.kr) __나기인__
+* [✉️](mailto:kina4147@etri.re.kr) __나기인__
 #
 ![](https://www.etri.re.kr/images/kor/sub5/signature08.png)

@@ -22,6 +22,6 @@ ped_node: Modules for communication between the anomaly detection module and the
 - Models are trained with our specific dataset. Please contact us.
 
 ### Contributor
-* [✉️](mailto:jh_lee@etri.re.kr) __이진하__ (in Ha, Lee)
+* [✉️](mailto:jh_lee@etri.re.kr) __이진하__ (Jin Ha, Lee)
 #
 ![](https://www.etri.re.kr/images/kor/sub5/signature08.png)
